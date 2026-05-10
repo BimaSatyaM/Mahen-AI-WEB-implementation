@@ -267,24 +267,31 @@ header {
 @media (max-width: 640px) {
     body {
         height: 100dvh;
-        /* dynamic viewport height untuk mobile */
         padding: 8px;
+        overflow: hidden;
+    }
+
+    .chat-container {
+        height: calc(100dvh - 160px);
+        /* sesuaikan tinggi header + footer */
+        padding-left: 8px;
+        padding-right: 8px;
+        padding-bottom: 10px;
     }
 
     footer {
         padding-left: 8px;
         padding-right: 8px;
-        padding-bottom: env(safe-area-inset-bottom, 8px);
-        /* handle notch/home bar */
+        padding-bottom: env(safe-area-inset-bottom, 12px);
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: transparent;
+        z-index: 20;
     }
 
     footer .w-full.max-w-4xl {
         max-width: 100%;
-    }
-
-    .chat-container {
-        padding-left: 8px;
-        padding-right: 8px;
-        padding-bottom: 20px;
     }
 }
