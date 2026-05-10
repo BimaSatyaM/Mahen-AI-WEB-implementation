@@ -24,9 +24,10 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
 
-    /* Masking tipis agar tidak alay */
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20px, black calc(100% - 20px), transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0%, black 20px, black calc(100% - 20px), transparent 100%);
+    /* -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20px, black calc(100% - 20px), transparent 100%); */
+    /*mask-image: linear-gradient(to bottom, transparent 0%, black 20px, black calc(100% - 20px), transparent 100%); */
+
+    scrollbar-gutter: stable;
 }
 
 header {
