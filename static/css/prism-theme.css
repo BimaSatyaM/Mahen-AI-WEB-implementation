@@ -1,0 +1,59 @@
+.ai-msg pre[class*="language-"] {
+    margin: 1rem 0 !important;
+    padding: 1.2rem !important;
+    border-radius: 12px !important;
+    font-size: 0.85rem !important;
+    background: #1e1e1e !important;
+    border: 1px solid #334155 !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.ai-msg code[class*="language-"] {
+    font-family: 'Fira Code', 'Consolas', 'Monaco', monospace !important;
+    text-shadow: none !important;
+    line-height: 1.5 !important;
+}
+
+.ai-msg pre::-webkit-scrollbar {
+    height: 5px;
+}
+
+.ai-msg pre::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+.ai-msg pre::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 10px;
+}
+
+.code-wrapper {
+    position: relative;
+    margin: 1rem 0;
+}
+
+.copy-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 4px 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ccc;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 10;
+}
+
+.copy-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.copy-button.copied {
+    background: #10b981;
+    color: white;
+    border-color: #10b981;
+}

@@ -1,0 +1,234 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #b6ceff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    overflow: hidden;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    height: calc(100vh - 160px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 20px;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15px, black calc(100% - 15px), transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 15px, black calc(100% - 15px), transparent 100%);
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.msg {
+    padding: 1rem;
+    max-width: 85%;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    transition: all 0.2s ease;
+}
+
+@media (min-width: 768px) {
+    .msg {
+        max-width: 70%;
+    }
+}
+
+.user-msg {
+    align-self: flex-end !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    background-color: #2563eb !important;
+    color: white !important;
+    border-radius: 1.25rem 1.25rem 0 1.25rem !important;
+}
+
+.ai-msg {
+    align-self: flex-start !important;
+    margin-right: auto !important;
+    margin-left: 0 !important;
+    background-color: white !important;
+    color: #1f2937 !important;
+    border-radius: 1.25rem 1.25rem 1.25rem 0 !important;
+    border: 1px solid #e5e7eb !important;
+}
+
+.ai-msg p {
+    margin-bottom: 0.85rem;
+}
+
+.ai-msg p:last-child {
+    margin-bottom: 0;
+}
+
+.ai-msg ul,
+.ai-msg ol {
+    margin-left: 1.5rem;
+    margin-bottom: 0.85rem;
+}
+
+.ai-msg strong {
+    font-weight: 700;
+    color: #111827;
+}
+
+.user-msg pre {
+    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.user-msg .bg-gray-900 {
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.user-msg .bg-gray-900:hover {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-1px);
+}
+
+.code-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    transition: opacity 0.2s ease-in-out;
+}
+
+#fullCodeModal:not(.hidden) {
+    display: flex !important;
+}
+
+.code-modal-container {
+    width: 100%;
+    max-width: 1000px;
+    height: 85vh;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.code-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    background: rgba(30, 41, 59, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.code-modal-close {
+    color: #94a3b8;
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    transition: all 0.2s;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.code-modal-close:hover {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.code-modal-body {
+    flex: 1;
+    overflow: auto;
+    padding: 1.5rem;
+    background: #0d1117;
+}
+
+#fullCodeContent {
+    font-family: 'Fira Code', 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #60a5fa;
+    white-space: pre;
+    margin: 0;
+}
+
+.code-modal-footer {
+    padding: 0.75rem 1.5rem;
+    background: #0f172a;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: right;
+    color: #475569;
+    font-size: 0.75rem;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.code-modal-body::-webkit-scrollbar {
+    width: 10px;
+}
+
+.code-modal-body::-webkit-scrollbar-track {
+    background: #0d1117;
+}
+
+.code-modal-body::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 10px;
+    border: 2px solid #0d1117;
+}
+
+#fileTypeCode {
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.group:hover .fa-trash-can {
+    animation: shake 0.5s ease-in-out infinite;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-10deg);
+    }
+
+    75% {
+        transform: rotate(10deg);
+    }
+}
