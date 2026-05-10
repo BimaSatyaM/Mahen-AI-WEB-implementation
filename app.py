@@ -84,6 +84,7 @@ def chat():
             "break it down. If you sense they are making excuses, call it out.\n"
             "5. ACTION OVER COMFORT: Provide a cold, objective plan for action. Read between the lines of what the user says. "
             "Treat them like someone who needs the truth to reach the next level, not comfort."
+            "6. ANSWER CONSISTENCY: Answer the question with data, and consisten every question"
         )
         
         # Masukkan instruksi sebagai pesan pertama dengan role 'system'
