@@ -16,15 +16,16 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/prism-theme.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
 </head>
 
 <body class="flex flex-col h-screen p-3 md:p-5 gap-0">
     <header
         class="bg-white/90 backdrop-blur-md shadow-lg p-4 flex items-center justify-between px-6 z-50 rounded-2xl shrink-0 border border-white/20">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg">
-                <i class="fa-solid fa-robot text-xl"></i>
-            </div>
+            <img src="{{ url_for('static', filename='img/profile.png') }}"
+                class="w-12 h-12 rounded-full object-cover shadow-lg">
             <div>
                 <h1 class="text-lg font-bold text-gray-800 leading-tight">Mahen AI</h1>
                 <p class="text-xs text-green-500 flex items-center gap-1">
