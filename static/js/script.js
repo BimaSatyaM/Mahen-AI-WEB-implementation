@@ -7,18 +7,54 @@ const universalInput = document.getElementById('universalInput');
 let attachedFiles = [];
 
 // --- 1. INISIALISASI HALAMAN ---
-window.onload = () => {
+window.addEventListener('load', () => {
+    // Load chat history
     const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
     history.forEach(item => {
         const div = document.createElement('div');
         div.classList.add('msg', item.sender === 'user' ? 'user-msg' : 'ai-msg');
         div.innerHTML = item.sender === 'user' ? item.text : formatAIResponse(item.text);
         chatbox.appendChild(div);
-
         if (item.sender === 'ai') applySyntaxHighlight(div);
     });
     chatbox.scrollTop = chatbox.scrollHeight;
-};
+
+    // Welcome Message
+    if (history.length === 0) {
+        const welcomeText = "Welcome to Mahen AI. 🌐 I am your direct advisor. No fluff, no excuses. ⚖️ Give me a specific topic or a complex problem, and I will dismantle it using hard data and objective logic. 🛠️ What are we optimizing today? ⚡";
+        addMessage(welcomeText, 'ai');
+    }
+
+    // Tombol Bersihkan Chat
+    const btnHeader = document.getElementById('openClearModal');
+    if (btnHeader) {
+        btnHeader.addEventListener('click', (e) => {
+            e.preventDefault();
+            showClearModal();
+        });
+    }
+
+    // Tombol Batal
+    const btnCancel = document.getElementById('cancelClear');
+    if (btnCancel) btnCancel.addEventListener('click', hideClearModal);
+
+    // Tombol Konfirmasi Hapus
+    const btnConfirm = document.getElementById('confirmClear');
+    if (btnConfirm) {
+        btnConfirm.addEventListener('click', () => {
+            localStorage.removeItem('chatHistory');
+            location.reload();
+        });
+    }
+
+    // Klik di luar modal untuk menutup
+    const clearModal = document.getElementById('clearModal');
+    if (clearModal) {
+        clearModal.addEventListener('click', (e) => {
+            if (e.target === clearModal) hideClearModal();
+        });
+    }
+});
 
 // --- 2. FUNGSI KIRIM PESAN ---
 async function sendMessage() {
@@ -135,7 +171,7 @@ function addMessage(text, sender) {
     div.id = id;
     div.classList.add('msg');
     div.classList.add(sender === 'user' ? 'user-msg' : 'ai-msg');
-    
+
     if (sender === 'ai' && !text.includes('fa-spin')) {
         div.innerHTML = formatAIResponse(text);
     } else {
@@ -153,43 +189,23 @@ function saveChatHistory(text, sender) {
     localStorage.setItem('chatHistory', JSON.stringify(history));
 }
 
-// --- 4. LOGIKA MODAL & WELCOME MESSAGE ---
-function clearChat() {
-    const clearModal = document.getElementById('clearModal');
-    if (clearModal) {
-        clearModal.classList.remove('hidden');
-        clearModal.classList.add('flex');
+// --- 4. LOGIKA MODAL (SINKRONISASI TOTAL) ---
+
+function showClearModal() {
+    const modal = document.getElementById('clearModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
     }
 }
 
-window.addEventListener('load', () => {
-    const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
-    
-    // Tampilkan Welcome Message jika history kosong
-    if (history.length === 0) {
-        const welcomeText = "Welcome to Mahen AI. 🌐 I am your direct advisor. No fluff, no excuses. ⚖️ Give me a specific topic or a complex problem, and I will dismantle it using hard data and objective logic. 🛠️ What are we optimizing today? ⚡";
-        addMessage(welcomeText, 'ai');
+function hideClearModal() {
+    const modal = document.getElementById('clearModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
     }
-
-    // Setup tombol modal
-    const btnCancelClear = document.getElementById('cancelClear');
-    const btnConfirmClear = document.getElementById('confirmClear');
-    const clearModal = document.getElementById('clearModal');
-
-    if (btnCancelClear) {
-        btnCancelClear.addEventListener('click', () => {
-            clearModal.classList.add('hidden');
-            clearModal.classList.remove('flex');
-        });
-    }
-
-    if (btnConfirmClear) {
-        btnConfirmClear.addEventListener('click', () => {
-            localStorage.removeItem('chatHistory');
-            location.reload();
-        });
-    }
-});
+}
 
 // --- 5. HANDLING UPLOAD & MENU ---
 function toggleMenu(event) {
@@ -201,15 +217,9 @@ function toggleMenu(event) {
 
 document.addEventListener('click', function (event) {
     const menu = document.getElementById('uploadMenu');
-    const clearModal = document.getElementById('clearModal');
-
     if (menu && !menu.contains(event.target)) {
         menu.classList.add('hidden');
         menu.classList.remove('flex');
-    }
-    if (event.target === clearModal) {
-        clearModal.classList.add('hidden');
-        clearModal.classList.remove('flex');
     }
 });
 
