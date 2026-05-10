@@ -264,41 +264,27 @@ header {
     }
 }
 
-/* --- MOBILE RESPONSIVE --- */
 @media (max-width: 640px) {
     body {
+        height: 100dvh;
+        /* dynamic viewport height untuk mobile */
         padding: 8px;
-        gap: 0;
-    }
-
-    header {
-        padding: 10px 14px;
-        border-radius: 16px;
-    }
-
-    header h1 {
-        font-size: 1rem;
-    }
-
-    .chat-container {
-        padding-top: 10px;
-        padding-left: 8px;
-        padding-right: 8px;
-    }
-
-    .msg {
-        max-width: 92%;
-        font-size: 0.9rem;
-        padding: 0.75rem;
     }
 
     footer {
-        padding-bottom: 8px;
         padding-left: 8px;
         padding-right: 8px;
+        padding-bottom: env(safe-area-inset-bottom, 8px);
+        /* handle notch/home bar */
     }
 
     footer .w-full.max-w-4xl {
-        border-radius: 16px;
+        max-width: 100%;
+    }
+
+    .chat-container {
+        padding-left: 8px;
+        padding-right: 8px;
+        padding-bottom: 20px;
     }
 }
