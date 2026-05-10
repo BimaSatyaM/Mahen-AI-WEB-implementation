@@ -14,12 +14,19 @@ body {
     flex-direction: column;
     gap: 1rem;
     width: 100%;
-    height: calc(100vh - 160px);
+
+    padding-top: 15px;
+    padding-bottom: 40px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    height: calc(100vh - 120px);
     overflow-y: auto;
     overflow-x: hidden;
-    padding-bottom: 20px;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15px, black calc(100% - 15px), transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0%, black 15px, black calc(100% - 15px), transparent 100%);
+
+    /* Masking tipis agar tidak alay */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20px, black calc(100% - 20px), transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 20px, black calc(100% - 20px), transparent 100%);
 }
 
 header {
