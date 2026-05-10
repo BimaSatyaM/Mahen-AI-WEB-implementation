@@ -195,8 +195,15 @@ header {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 /* --- SCROLLBAR --- */
@@ -242,7 +249,56 @@ header {
 }
 
 @keyframes shake {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-10deg); }
-    75% { transform: rotate(10deg); }
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-10deg);
+    }
+
+    75% {
+        transform: rotate(10deg);
+    }
+}
+
+/* --- MOBILE RESPONSIVE --- */
+@media (max-width: 640px) {
+    body {
+        padding: 8px;
+        gap: 0;
+    }
+
+    header {
+        padding: 10px 14px;
+        border-radius: 16px;
+    }
+
+    header h1 {
+        font-size: 1rem;
+    }
+
+    .chat-container {
+        padding-top: 10px;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .msg {
+        max-width: 92%;
+        font-size: 0.9rem;
+        padding: 0.75rem;
+    }
+
+    footer {
+        padding-bottom: 8px;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    footer .w-full.max-w-4xl {
+        border-radius: 16px;
+    }
 }

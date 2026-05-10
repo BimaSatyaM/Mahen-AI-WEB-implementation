@@ -25,7 +25,7 @@
         class="bg-white/90 backdrop-blur-md shadow-lg p-4 flex items-center justify-between px-6 z-50 rounded-2xl shrink-0 border border-white/20">
         <div class="flex items-center gap-3">
             <img src="{{ url_for('static', filename='img/profile.png') }}"
-                class="w-12 h-12 rounded-full object-cover shadow-lg">
+                class="w-12 h-12 rounded-full object-cover shadow-lg" onerror="this.style.display='none'">
             <div>
                 <h1 class="text-lg font-bold text-gray-800 leading-tight">Mahen AI</h1>
                 <p class="text-xs text-green-500 flex items-center gap-1">
