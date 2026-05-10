@@ -255,3 +255,16 @@ function showCodePreview(content) {
         previewArea.classList.remove('hidden');
     }
 }
+
+// TAMBAHKAN INI DI PALING BAWAH FILE script.js
+window.addEventListener('load', () => {
+    const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+
+    // Pesan hanya muncul jika tidak ada riwayat chat (chat baru didelete/kosong)
+    if (history.length === 0) {
+        const welcomeText = "Welcome to Mahen AI. 🌐 I am your direct advisor. No fluff, no excuses. ⚖️ Give me a specific topic or a complex problem, and I will dismantle it using hard data and objective logic. 🛠️ What are we optimizing today? ⚡";
+
+        // Memanggil fungsi addMessage yang sudah kamu buat di baris 112
+        addMessage(welcomeText, 'ai');
+    }
+});
