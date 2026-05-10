@@ -33,8 +33,8 @@
             </div>
         </div>
 
-        <button onclick="clearChat()"
-            class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-500 hover:text-white border border-red-200 hover:bg-red-500 hover:border-red-500 rounded-xl transition-all duration-300 group shadow-sm bg-white">
+        <button id="openClearModal"
+            class="btn-clear flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-500 hover:text-white border border-red-200 hover:bg-red-500 hover:border-red-500 rounded-xl transition-all duration-300 group shadow-sm bg-white">
             <i class="fa-solid fa-trash-can group-hover:shake"></i>
             <span class="hidden md:inline">Bersihkan Chat</span>
         </button>
@@ -138,6 +138,22 @@
             </div>
             <div class="code-modal-footer">
                 <span class="text-gray-500 text-xs italic">Mahen AI Code Viewer v1.0</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="clearModal" class="modal-overlay hidden">
+        <div class="modal-content animate-fadeIn">
+            <div
+                class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Hapus Riwayat?</h3>
+            <p class="text-gray-500 mb-6">Tindakan ini akan menghapus seluruh percakapan secara permanen. Kamu yakin?
+            </p>
+            <div class="modal-buttons">
+                <button id="cancelClear" class="btn-secondary">Batal</button>
+                <button id="confirmClear" class="btn-danger">Ya, Hapus</button>
             </div>
         </div>
     </div>

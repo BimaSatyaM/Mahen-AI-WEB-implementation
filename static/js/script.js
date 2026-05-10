@@ -6,6 +6,7 @@ const universalInput = document.getElementById('universalInput');
 
 let attachedFiles = [];
 
+// --- 1. INISIALISASI HALAMAN ---
 window.onload = () => {
     const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
     history.forEach(item => {
@@ -19,10 +20,10 @@ window.onload = () => {
     chatbox.scrollTop = chatbox.scrollHeight;
 };
 
+// --- 2. FUNGSI KIRIM PESAN ---
 async function sendMessage() {
     const message = userInput.value.trim();
     const hasFiles = attachedFiles.length > 0;
-
     const hasPastedCode = typeof pastedCodeContent !== 'undefined' && pastedCodeContent !== "";
 
     if (!message && !hasFiles && !hasPastedCode) return;
@@ -64,7 +65,6 @@ async function sendMessage() {
 
     if (hasPastedCode) {
         const lang = typeof detectLanguage === 'function' ? detectLanguage(pastedCodeContent) : 'CODE';
-
         userMessageHTML += `
             <div class="mb-2 w-full max-w-md bg-gray-900 rounded-lg overflow-hidden border border-white/10 shadow-sm cursor-pointer hover:border-blue-500/50 transition-all code-preview-card" 
                  data-full-code="${encodeURIComponent(pastedCodeContent)}"
@@ -77,7 +77,6 @@ async function sendMessage() {
                     <span class="text-[9px] text-gray-500 italic">Click to expand</span>
                 </div>
             </div>`;
-
         extractedTexts += `\n\n[Pasted Content]:\n${pastedCodeContent}`;
     }
 
@@ -92,7 +91,6 @@ async function sendMessage() {
     userInput.value = '';
     attachedFiles = [];
     attachmentPreview.innerHTML = '';
-
     if (hasPastedCode) removeCodePreview();
 
     const loadingId = addMessage('<i class="fa-solid fa-circle-notch animate-spin"></i> Memproses...', 'ai');
@@ -130,18 +128,18 @@ async function sendMessage() {
     chatbox.scrollTop = chatbox.scrollHeight;
 }
 
+// --- 3. FUNGSI HELPER UI ---
 function addMessage(text, sender) {
     const id = 'msg-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
     const div = document.createElement('div');
     div.id = id;
     div.classList.add('msg');
-
-    if (sender === 'user') {
-        div.classList.add('user-msg');
-        div.innerHTML = text;
+    div.classList.add(sender === 'user' ? 'user-msg' : 'ai-msg');
+    
+    if (sender === 'ai' && !text.includes('fa-spin')) {
+        div.innerHTML = formatAIResponse(text);
     } else {
-        div.classList.add('ai-msg');
-        div.innerHTML = text.includes('fa-spin') ? text : formatAIResponse(text);
+        div.innerHTML = text;
     }
 
     chatbox.appendChild(div);
@@ -155,13 +153,45 @@ function saveChatHistory(text, sender) {
     localStorage.setItem('chatHistory', JSON.stringify(history));
 }
 
+// --- 4. LOGIKA MODAL & WELCOME MESSAGE ---
 function clearChat() {
-    if (confirm("Apakah kamu ingin menghapus seluruh riwayat percakapan?")) {
-        localStorage.removeItem('chatHistory');
-        location.reload();
+    const clearModal = document.getElementById('clearModal');
+    if (clearModal) {
+        clearModal.classList.remove('hidden');
+        clearModal.classList.add('flex');
     }
 }
 
+window.addEventListener('load', () => {
+    const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+    
+    // Tampilkan Welcome Message jika history kosong
+    if (history.length === 0) {
+        const welcomeText = "Welcome to Mahen AI. 🌐 I am your direct advisor. No fluff, no excuses. ⚖️ Give me a specific topic or a complex problem, and I will dismantle it using hard data and objective logic. 🛠️ What are we optimizing today? ⚡";
+        addMessage(welcomeText, 'ai');
+    }
+
+    // Setup tombol modal
+    const btnCancelClear = document.getElementById('cancelClear');
+    const btnConfirmClear = document.getElementById('confirmClear');
+    const clearModal = document.getElementById('clearModal');
+
+    if (btnCancelClear) {
+        btnCancelClear.addEventListener('click', () => {
+            clearModal.classList.add('hidden');
+            clearModal.classList.remove('flex');
+        });
+    }
+
+    if (btnConfirmClear) {
+        btnConfirmClear.addEventListener('click', () => {
+            localStorage.removeItem('chatHistory');
+            location.reload();
+        });
+    }
+});
+
+// --- 5. HANDLING UPLOAD & MENU ---
 function toggleMenu(event) {
     event.stopPropagation();
     const menu = document.getElementById('uploadMenu');
@@ -171,16 +201,21 @@ function toggleMenu(event) {
 
 document.addEventListener('click', function (event) {
     const menu = document.getElementById('uploadMenu');
+    const clearModal = document.getElementById('clearModal');
+
     if (menu && !menu.contains(event.target)) {
         menu.classList.add('hidden');
         menu.classList.remove('flex');
+    }
+    if (event.target === clearModal) {
+        clearModal.classList.add('hidden');
+        clearModal.classList.remove('flex');
     }
 });
 
 function triggerUpload(filter) {
     universalInput.accept = filter;
     universalInput.click();
-
     const menu = document.getElementById('uploadMenu');
     menu.classList.add('hidden');
     menu.classList.remove('flex');
@@ -226,6 +261,7 @@ window.removeAttachment = function (fileName) {
     if (chip) chip.remove();
 };
 
+// --- 6. EVENT LISTENERS & UTILITIES ---
 sendBtn.addEventListener('click', sendMessage);
 userInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') sendMessage();
@@ -248,23 +284,7 @@ function showCodePreview(content) {
 
     if (previewArea && previewText) {
         previewText.textContent = content.substring(0, 500) + (content.length > 500 ? "..." : "");
-        if (typeLabel) {
-            typeLabel.textContent = detectLanguage(content);
-        }
-
+        if (typeLabel) typeLabel.textContent = detectLanguage(content);
         previewArea.classList.remove('hidden');
     }
 }
-
-// TAMBAHKAN INI DI PALING BAWAH FILE script.js
-window.addEventListener('load', () => {
-    const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
-
-    // Pesan hanya muncul jika tidak ada riwayat chat (chat baru didelete/kosong)
-    if (history.length === 0) {
-        const welcomeText = "Welcome to Mahen AI. 🌐 I am your direct advisor. No fluff, no excuses. ⚖️ Give me a specific topic or a complex problem, and I will dismantle it using hard data and objective logic. 🛠️ What are we optimizing today? ⚡";
-
-        // Memanggil fungsi addMessage yang sudah kamu buat di baris 112
-        addMessage(welcomeText, 'ai');
-    }
-});
